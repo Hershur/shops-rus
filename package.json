@@ -2,14 +2,24 @@
   "name": "shops-rus",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "start": "node --experimental-modules --es-module-specifier-resolution=node src/server.js",
+    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node src/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.3"
+    "celebrate": "^15.0.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "sequelize": "^6.17.0",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
