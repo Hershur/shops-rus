@@ -21,9 +21,8 @@ export const getDiscountsRepo = async ()=> {
 
 
 export const getDiscountByTypeRepo = async(discountType)=> {
-    const discount = await Discounts.findAll({ where: { type: discountType } });
+    const discount = await Discounts.findOne({ where: { type: discountType } });
 
-    console.log("Discount by type", discountType);
 
-    return discount;
+    return discount?.percentage;
 }

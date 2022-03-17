@@ -4,12 +4,15 @@ import {
     getDiscountPercentByType 
 } from "../helpers/helpers";
 import { getCustomerByIdRepo } from "../repositories/customers.repo";
+import { getDiscountByTypeRepo } from "../repositories/discounts.repo";
 
 
 export const getCutomerInvoiceService = async (customerId, invoiceBody)=> {
 
     try {
         const customer = await getCustomerByIdRepo(customerId);
+        const discountPercent = await getDiscountByTypeRepo(customer.userType);
+
          console.log("invoice", customerId);
         
         if(!customer){
@@ -20,11 +23,21 @@ export const getCutomerInvoiceService = async (customerId, invoiceBody)=> {
                 data: {}
             };  
         }
-        const calculateDiscountPercent = computeCustomerDiscountPercent(customer.userType, customer.registeredOn, invoiceBody.productType);
+
+        let calculateDiscountPercent;
+
+        if(invoiceBody.productType.toLowerCase() === 'groceries'){
+            calculateDiscountPercent = 0;
+        } else {
+            calculateDiscountPercent = discountPercent/100;
+        }
+
+        // const calculateDiscountPercent = computeCustomerDiscountPercent(customer.userType, customer.registeredOn, invoiceBody.productType);
+        // const calculateDiscountPercent = computeCustomerDiscountPercent(customer.userType, customer.registeredOn, invoiceBody.productType);
         const calculateDiscountRate = computeCustomerDiscountRate(invoiceBody.amount);
     
-        const discount =  (calculateDiscountPercent * invoiceBody.amount) + calculateDiscountRate;
-        const discountPercent = getDiscountPercentByType[customer.userType.toLowerCase()];
+        const discount =  ((discountPercent/100) * invoiceBody.amount) + calculateDiscountRate;
+        // const discountPercent = getDiscountPercentByType[customer.userType.toLowerCase()];
 
         return {
             statusCode: 200, 
@@ -34,7 +47,7 @@ export const getCutomerInvoiceService = async (customerId, invoiceBody)=> {
                 customerType: customer.userType,
                 productType: invoiceBody.productType,
                 totalAmount: invoiceBody.amount,
-                discountPercent: discountPercent,
+                discountPercent: `${discountPercent}%`,
                 discountRate: calculateDiscountRate,
                 discountedAmount: calculateDiscountPercent * invoiceBody.amount,
                 totalDiscountedAmount: discount,
