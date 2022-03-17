@@ -15,6 +15,12 @@ Customers.init({
     },
     address:  {
         type: DataTypes.STRING 
+    },
+    userType:  {
+        type: DataTypes.STRING 
+    },
+    registeredOn: {
+        type: DataTypes.STRING
     }
 }, { 
     sequelize,

@@ -6,7 +6,9 @@ export const createCustomerRepo = async (customerBody)=> {
         customerId: uid(),
         fullName: customerBody.fullName,
         email: customerBody.email,
-        address: customerBody.address
+        address: customerBody.address,
+        userType: customerBody.userType,
+        registeredOn: customerBody.registeredOn
     };
 
     const saveCustomer = await Customers.create(customer);

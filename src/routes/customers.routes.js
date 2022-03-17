@@ -27,6 +27,17 @@ customersRouter.post('/',
                 .messages({
                     "string.empty": "Address is required.",
                 }),
+            userType: Joi.string()
+                .required()
+                .messages({
+                    "string.empty": "User type is required.",
+                }),
+            registeredOn: Joi.string()
+                .required()
+                .messages({
+                    "string.empty": "Registration date is required.",
+                }),
+            
         }),
     }),
     async (req, res) => await createCustomer(req, res)

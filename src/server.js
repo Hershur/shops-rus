@@ -3,7 +3,7 @@ import { PORT } from './config';
 import sequelize from './database/database';
 
 
-sequelize.sync().then(()=> console.log('Sqllite db running'))
+sequelize.sync({force: 'true'}).then(()=> console.log('Sqllite db running'))
 
 app.set('port', PORT);
 
